@@ -1,6 +1,6 @@
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import {
@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button'
 import Loader from '@/components/shared/Loader'
 
 import { SignupValidation } from '@/lib/validation'
+import { createUserAccount } from '@/lib/appwrite/api'
 
 const SignupForm = () => {
   const isLoading = false
@@ -31,7 +32,11 @@ const SignupForm = () => {
   })
 
   // Handler
-  const handleSignup = async (user: z.infer<typeof SignupValidation>) => {}
+  const handleSignup = async (user: z.infer<typeof SignupValidation>) => {
+    const newUser = await createUserAccount(user)
+
+    console.log(newUser)
+  }
 
   return (
     <Form {...form}>
